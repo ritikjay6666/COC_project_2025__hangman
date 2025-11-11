@@ -1,0 +1,103 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+/*------------------------------------------------------------
+  Function: checkGuess
+  Purpose : Checks if the guessed letter is present in the
+            secret word and updates the display word if found.
+  Return  : 1 → Correct guess
+            0 → Wrong guess
+-------------------------------------------------------------*/
+int checkGuess(const char secretWord[], char displayWord[], char letter) 
+{
+    int found = 0;
+
+    for (int i = 0; i < strlen(secretWord); i++) 
+    {
+        if (secretWord[i] == letter) 
+        {
+            displayWord[i] = letter;  // Reveal correct letter
+            found = 1;
+        }
+    }
+
+    return found;
+}
+
+/*------------------------------------------------------------
+  Function: checkWin
+  Purpose : Checks if the word is fully guessed (no '_' left)
+  Return  : 1 → Player has won
+            0 → Still letters remaining
+-------------------------------------------------------------*/
+int checkWin(const char displayWord[])
+{
+    for (int i = 0; i < strlen(displayWord); i++) 
+    {
+        if (displayWord[i] == '_') 
+        {
+            return 0; // Not fully guessed yet
+        }
+    }
+    return 1; // Word completed
+}
+
+int main() 
+{
+    // The secret word is fixed (Only one word used)
+    const char secretWord[] = "CLASH";
+
+    int length = strlen(secretWord);
+    char displayWord[length + 1];
+
+    // Initialize displayWord with '_' to hide original word
+    for (int i = 0; i < length; i++) 
+    {
+        displayWord[i] = '_';
+    }
+    displayWord[length] = '\0'; // End string properly
+
+    int lives = 6;   // Player gets 6 wrong attempts
+    char guess;      // To store user's guessed letter
+
+    // -------------------- GAME START --------------------
+    printf("\n=================================\n");
+    printf("          HANGMAN GAME           \n");
+    printf("=================================\n");
+
+    // Main game loop → runs until player loses all lives
+    while (lives > 0) 
+    {
+        printf("\nWord  : %s", displayWord);
+        printf("\nLives : %d", lives);
+        printf("\nGuess a letter: ");
+        scanf(" %c", &guess);
+
+        guess = toupper(guess); // Ensure uppercase for matching
+
+        // Check if guessed letter is in secret word
+        if (checkGuess(secretWord, displayWord, guess)) 
+        {
+            printf(" Correct guess!\n");
+        } else 
+        {
+            printf(" Wrong guess!\n");
+            lives--; // Deduct life on wrong guess
+        }
+
+        // Check if player completed the word
+        if (checkWin(displayWord)) 
+        {
+            printf("\n Congratulations! You Won!\n");
+            printf("The word was: %s\n\n", secretWord);
+            return 0; // End program (player won)
+        }
+    }
+
+    // If loop exits → lives became 0 → player lost
+    printf("\n You lost! No lives left.\n");
+    printf(" The correct word was: %s\n", secretWord);
+
+    return 0;
+}
