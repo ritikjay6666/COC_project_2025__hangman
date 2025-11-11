@@ -1,0 +1,49 @@
+START
+│
+├─> 1. Include required libraries
+│      - stdio.h, string.h, ctype.h
+│
+├─> 2. Declare functions
+│      ├─ checkGuess()  → checks letter & updates display word
+│      └─ checkWin()    → checks if word is fully guessed
+│
+├─> 3. main() starts execution
+│
+├─> 4. Store secret word
+│      secretWord = "CLASH"
+│
+├─> 5. Create displayWord array
+│      Example: C L A S H  →  _ _ _ _ _
+│
+├─> 6. Set initial lives = 6
+│
+├─> 7. START GAME LOOP → runs while (lives > 0)
+│      │
+│      ├─ Show current progress ( _ _ _ _ _ )
+│      ├─ Display remaining lives
+│      ├─ Take letter input from user
+│      ├─ Convert letter to UPPERCASE
+│      │
+│      ├─ Call checkGuess(secretWord, displayWord, letter)
+│      │      ├─ Loop through secret word
+│      │      ├─ If letter matches → update displayWord
+│      │      └─ Return 1 if found, else 0
+│      │
+│      ├─ If return = 0  → decrease lives, print "Wrong Guess"
+│      ├─ If return = 1  → print "Correct Guess"
+│      │
+│      ├─ Call checkWin(displayWord)
+│      │      ├─ Scan displayWord for any '_'
+│      │      ├─ If '_' found → return 0 (not finished)
+│      │      └─ If no '_' → return 1 (player won)
+│      │
+│      ├─ If return = 1 (Win)
+│      │      ├─ Print "You Won!"
+│      │      └─ EXIT program
+│      │
+│      └─ Else → loop repeats
+│
+├─> 8. If loop exits due to lives = 0
+│      └─ Print "You Lost" + show secret word
+│
+└─> 9. END PROGRAM
